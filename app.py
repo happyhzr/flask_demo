@@ -55,5 +55,21 @@ def signup():
         return redirect(url_for('login'))
 
 
+@app.route('/logout')
+def logout():
+    session.pop('user_id')
+    return redirect(url_for('login'))
+
+
+@app.context_processor
+def my_context_processor():
+    user_id = session.get('user_id')
+    if user_id:
+        user = User.query.filter(User.id == user_id).first()
+        if user:
+            return {'user': user}
+    return {}
+
+
 if __name__ == '__main__':
     app.run()
