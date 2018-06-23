@@ -55,10 +55,15 @@ def signup():
         return redirect(url_for('login'))
 
 
-@app.route('/logout')
+@app.route('/logout/')
 def logout():
     session.pop('user_id')
     return redirect(url_for('login'))
+
+
+@app.route('/question/')
+def question():
+    return render_template('question.html')
 
 
 @app.context_processor
