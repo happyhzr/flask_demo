@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 
 import config
 from models import User
@@ -18,6 +18,18 @@ def index():
 def login():
     if request.method == 'GET':
         return render_template('login.html')
+    else:
+        phone = request.form.get('phone')
+        password = request.form.get('password')
+        print('phone', phone, 'password', password)
+        user = User.query.filter(User.phone == phone).first()
+        print(user)
+        if password != user.password:
+            return '密码错误'
+
+        session['user_id'] = user.id
+        session.permanent = True
+        return redirect(url_for('index'))
 
 
 @app.route('/signup/', methods=['GET', 'POST'])
