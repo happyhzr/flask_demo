@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import config
 from models import User
 from exts import db
+from decorators import login_required
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -21,9 +22,9 @@ def login():
     else:
         phone = request.form.get('phone')
         password = request.form.get('password')
-        print('phone', phone, 'password', password)
         user = User.query.filter(User.phone == phone).first()
-        print(user)
+        if not user:
+            return '用户不存在'
         if password != user.password:
             return '密码错误'
 
@@ -62,7 +63,11 @@ def logout():
 
 
 @app.route('/question/')
+@login_required
 def question():
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('login'))
     return render_template('question.html')
 
 
