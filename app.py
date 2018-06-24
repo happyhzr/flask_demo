@@ -81,10 +81,15 @@ def question():
         return redirect(url_for('index'))
 
 
-@app.route('/detail/<int:question_id>')
+@app.route('/detail/<int:question_id>/')
 def detail(question_id):
     question = Question.query.filter(Question.id == question_id).first()
     return render_template('detail.html', question=question)
+
+
+@app.route('/add_answer/', methods=['POST'])
+def add_answer():
+    answer = request.form.get('answer')
 
 
 @app.context_processor
