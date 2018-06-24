@@ -112,7 +112,3 @@ def my_context_processor():
         if user:
             return {'user': user}
     return {}
-
-
-if __name__ == '__main__':
-    app.run()
