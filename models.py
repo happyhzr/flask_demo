@@ -28,6 +28,7 @@ class Answer(db.Model):
     content = db.Column(db.Text)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    create_time = db.Column(db.DateTime, default=datetime.now)
 
-    question = db.relationship('Question', backref=db.backref('answers'))
+    question = db.relationship('Question', backref=db.backref('answers', order_by=id.desc()))
     author = db.relationship('User', backref=db.backref('authors'))

@@ -27,9 +27,16 @@
         <button class="btn btn-primary">评论</button>
     </div>
 </form>
-<ul>
+<ul class="answer-list">
     {%for answer in question.answers%}
-    <li>{{answer.content}}</li>
+    <li>
+        <div class="user-info">
+            <img class="avatar" src="{{url_for('static',filename='images/python.png')}}"/>
+            <span class="username">{{answer.author.username}}</span>
+            <span class="create-time">asadfasfd</span>
+        </div>
+        <p class="answer-content">{{answer.content}}</p>
+    </li>
     {%endfor%}
 </ul>
 {% endblock %}
