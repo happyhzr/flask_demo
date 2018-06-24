@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 
 import config
-from models import User
+from models import User, Question
 from exts import db
 from decorators import login_required
 
@@ -62,13 +62,20 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/question/')
+@app.route('/question/',methods=['GET','POST'])
 @login_required
 def question():
-    user_id = session.get('user_id')
-    if not user_id:
-        return redirect(url_for('login'))
-    return render_template('question.html')
+    if request.method == 'GET':
+        return render_template('question.html')
+    else:
+        title = request.form.get('title')
+        content = request.form.get('content')
+        user_id = session.get('user_id')
+        user = User.query.filter(User.id == user_id).first()
+        question = Question(title=title, content=content, author=user)
+        db.session.add(question)
+        db.session.commit()
+        return redirect(url_for('index'))
 
 
 @app.context_processor
