@@ -12,7 +12,10 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    context = {
+        'questions': Question.query.order_by('-create_time').all(),
+    }
+    return render_template('index.html', **context)
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -62,7 +65,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/question/',methods=['GET','POST'])
+@app.route('/question/', methods=['GET', 'POST'])
 @login_required
 def question():
     if request.method == 'GET':

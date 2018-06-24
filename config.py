@@ -3,7 +3,7 @@ from os import urandom
 
 DEBUG = True
 SECRET_KEY = urandom(24)
-# SECRET_KEY = 'Keyborad Cat'
+#SECRET_KEY = 'Keyborad Cat'
 PERMANENT_SESSION_LIFETIME = timedelta(days=7)
 
 DIALECT = 'mysql'

@@ -10,35 +10,20 @@
 
 {% block main%}
 <ul>
+    {% for question in questions %}
     <li>
         <div class="avatar-group">
             <img src="{{ url_for('static',filename='images/python.png') }}">
         </div>
         <div class="question-group">
-            <p class="question-title"><a href="#">hellworld</a></p>
-            <p class="question-content">
-                hellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworld
-            </p>
+            <p class="question-title"><a href="#">{{question.title}}</a></p>
+            <p class="question-content">{{question.content}}</p>
             <div class="question-info">
-                <span class="question-author">happy</span>
-                <span class="question-time">12:21</span>
+                <span class="question-author">{{question.author.username}}</span>
+                <span class="question-time">{{question.create_time}}</span>
             </div>
         </div>
     </li>
-    <li>
-        <div class="avatar-group">
-            <img src="{{ url_for('static',filename='images/python.png') }}">
-        </div>
-        <div class="question-group">
-            <p class="question-title"><a href="#">hellworld</a></p>
-            <p class="question-content">
-                hellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworldhellworld
-            </p>
-            <div class="question-info">
-                <span class="question-author">happy</span>
-                <span class="question-time">12:21</span>
-            </div>
-        </div>
-    </li>
+    {% endfor %}
 </ul>
 {% endblock %}
