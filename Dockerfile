@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD [ "python", "./manager.py" ,"runserver","-h","0.0.0.0","-p","5001"]
+CMD [ "python", "./manager.py" ,"runserver","-h","0.0.0.0","-p","5000"]
