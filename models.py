@@ -16,10 +16,10 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100))
     content = db.Column(db.Text)
-    create_time = db.Column(db.DateTime, default=datetime.now)
+    create_time = db.Column(db.DateTime, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    author = db.relationship('User', backref=db.backref('questions'))
+    author = db.relationship('User', backref='questions')
 
 
 class Answer(db.Model):
@@ -30,5 +30,5 @@ class Answer(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
 
-    question = db.relationship('Question', backref=db.backref('answers', order_by=id.desc()))
-    author = db.relationship('User', backref=db.backref('authors'))
+    question = db.relationship('Question', backref='answers')
+    author = db.relationship('User', backref='authors')

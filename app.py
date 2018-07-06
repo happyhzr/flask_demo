@@ -13,7 +13,7 @@ db.init_app(app)
 @app.route('/')
 def index():
     context = {
-        'questions': Question.query.order_by('-create_time').all(),
+        'questions': Question.query.order_by(Question.create_time.desc()).all(),
     }
     return render_template('index.html', **context)
 
@@ -25,7 +25,7 @@ def login():
     else:
         phone = request.form.get('phone')
         password = request.form.get('password')
-        user = User.query.filter_by(phone=phone).first()
+        user = User.query.filter(User.phone == phone).first()
         if not user:
             return '用户不存在'
         if password != user.password:
@@ -49,7 +49,7 @@ def signup():
         if password1 != password2:
             return '密码不相等'
 
-        user = User.query.filter_by(phone=phone).first()
+        user = User.query.filter(User.phone == phone).first()
         if user:
             return '该手机号码已被注册'
 
@@ -74,7 +74,7 @@ def question():
         title = request.form.get('title')
         content = request.form.get('content')
         user_id = session.get('user_id')
-        user = User.query.filter_by(id=user_id).first()
+        user = User.query.filter(User.id == user_id).first()
         question = Question(title=title, content=content, author=user)
         db.session.add(question)
         db.session.commit()
@@ -83,7 +83,7 @@ def question():
 
 @app.route('/detail/<int:question_id>/')
 def detail(question_id):
-    question = Question.query.filter_by(id=question_id).first()
+    question = Question.query.filter(Question.id == question_id).first()
     return render_template('detail.html', question=question)
 
 
@@ -94,9 +94,9 @@ def add_answer():
     question_id = request.form.get('question_id')
     answer = Answer(content=content)
     user_id = session.get('user_id')
-    user = User.query.filter_by(id=user_id).first()
+    user = User.query.filter(User.id == user_id).first()
     answer.author = user
-    question = Question.query.filter_by(id=question_id).first()
+    question = Question.query.filter(Question.id == question_id).first()
     answer.question = question
     db.session.add(answer)
     db.session.commit()
@@ -108,7 +108,7 @@ def add_answer():
 def my_context_processor():
     user_id = session.get('user_id')
     if user_id:
-        user = User.query.filter_by(id=user_id).first()
+        user = User.query.filter(User.id == user_id).first()
         if user:
             return {'user': user}
     return {}
