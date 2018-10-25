@@ -1,1 +1,1 @@
-docker build -t my-python-app .
+docker build -t happyhzr/blog-py .

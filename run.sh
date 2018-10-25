@@ -1,1 +1,1 @@
-docker run -it --rm -p=5000:5000 --name my-running-app my-python-app
+docker run -d -p=5000:5000 --name my-running-app happyhzr/blog-py
